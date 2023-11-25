@@ -21,6 +21,12 @@ void unir(const string& a, const string& b) {
         padre[nodoA] = nodoB;
 }
 
+bool ciudadesConectadas(const string& a, const string& b) {
+    return buscar(a) == buscar(b);
+}
+
+
+
 struct Carretera {
     string id;
     string ciudad1;
