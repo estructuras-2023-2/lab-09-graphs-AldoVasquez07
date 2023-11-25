@@ -14,6 +14,13 @@ string buscar(const string& s) {
     return padre[s];
 }
 
+void unir(const string& a, const string& b) {
+    string nodoA = buscar(a);
+    string nodoB = buscar(b);
+    if (nodoA != nodoB)
+        padre[nodoA] = nodoB;
+}
+
 struct Carretera {
     string id;
     string ciudad1;
