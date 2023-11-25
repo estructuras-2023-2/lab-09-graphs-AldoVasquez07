@@ -46,6 +46,19 @@ struct Carretera {
 };
 
 
+vector<string> dividir(const string& str, char delim) {
+    vector<string> tok;
+    size_t inicio = 0;
+    size_t fin = str.find(delim);
+    while (fin != string::npos) {
+        tok.push_back(str.substr(inicio, fin - inicio));
+        inicio = fin + 1;
+        fin = str.find(delim, inicio);
+    }
+    tok.push_back(str.substr(inicio));
+    return tok;
+}
+
 
 string reconstruye(const vector<string>& carreteras) {
     vector<Carretera> todasCarreteras;
