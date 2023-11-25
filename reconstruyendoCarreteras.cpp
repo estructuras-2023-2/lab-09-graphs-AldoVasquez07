@@ -1,8 +1,8 @@
 #include <iostream>
-#include <vector>
 #include <map>
 #include <set>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -45,7 +45,6 @@ struct Carretera {
     Carretera(const string& i, const string& c1, const string& c2, int co = -1) : id(i), ciudad1(c1), ciudad2(c2), costo(co) {}
 };
 
-
 vector<string> dividir(const string& str, char delim) {
     vector<string> tok;
     size_t inicio = 0;
@@ -59,18 +58,46 @@ vector<string> dividir(const string& str, char delim) {
     return tok;
 }
 
-
 string reconstruye(const vector<string>& carreteras) {
     vector<Carretera> todasCarreteras;
     vector<string> todasCiudades;
     set<string> carreterasReconstruir;
-    
-    
+
+    for (const auto& carreteraStr : carreteras) {
+        auto tok = dividir(carreteraStr, ' ');
+        todasCiudades.push_back(tok[1]);
+        todasCiudades.push_back(tok[2]);
+
+        if (tok.size() == 4) {
+            todasCarreteras.emplace_back(tok[0], tok[1], tok[2], stoi(tok[3]));
+        } else {
+            unir(tok[1], tok[2]);
+        }
+    }
+
+    for (const auto& carretera : todasCarreteras) {
+        if (!ciudadesConectadas(carretera.ciudad1, carretera.ciudad2)) {
+            unir(carretera.ciudad1, carretera.ciudad2);
+            carreterasReconstruir.insert(carretera.id);
+        }
+    }
+
+    if (!coneccionTotal(todasCiudades)) {
+        return "IMPOSIBLE";
+    }
+
+    string resultado;
+    for (const auto& id : carreterasReconstruir) {
+        resultado += id + " ";
+    }
+
+    return resultado.empty() ? "" : resultado.substr(0, resultado.length() - 1);
 }
 
+
 int main() {
-    vector<String> carreteras = {"C1 Lima Trujillo 1", "C2 Tacna Trujillo", "C3 Tacna Arequipa"}
-    cout << reconstruye(carreteras);
+    vector<string> descripcionesCarreteras = {"C1 Lima Trujillo 1", "C2 Tacna Trujillo", "C3 Tacna Arequipa"};;
+    cout << reconstruye(descripcionesCarreteras);
 
     return 0;
 }
