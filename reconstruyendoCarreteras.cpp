@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <set>
+#include <string>
 
 using namespace std;
 
@@ -25,7 +27,14 @@ bool ciudadesConectadas(const string& a, const string& b) {
     return buscar(a) == buscar(b);
 }
 
-
+bool coneccionTotal(const vector<string>& ciudades) {
+    if (ciudades.empty()) return true;
+    string nodo = buscar(ciudades.front());
+    for (const auto& ciudad : ciudades) {
+        if (buscar(ciudad) != nodo) return false;
+    }
+    return true;
+}
 
 struct Carretera {
     string id;
